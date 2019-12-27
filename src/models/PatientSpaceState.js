@@ -31,7 +31,7 @@ export default class PatientSpaceState {
                 mutation = "Tier3";
             }
             this.egfrMutations.push(mutation);
-            this.tmbRates.push(rand * 30)
+            this.tmbRates.push(Math.random() * 30)
         }
     }
 
@@ -58,43 +58,49 @@ export default class PatientSpaceState {
     }
 
     computeMatches() {
-        this.computeMutationMatches();
+        this.mutationMatches = this.computeMutationMatches();
         var tempMatches=[]
-        if (this.tmbSelected === 0) {
-            this.tmbMatches = this.mutationMatches;
-        } else {
-            for (var i=0; i<this.mutationMatches.length; i++) {
-                var currentTmb = this.tmbRates[this.mutationMatches[i]];
-                console.log(i + " " + this.mutationMatches[i] + " " + currentTmb);
+        for (var i=0; i<this.mutationMatches.length; i++) {
+            var mutationIndex = this.mutationMatches[i];
+            var currentTmb = this.tmbRates[mutationIndex];
+            if (this.tmbSelected === 0) {
+                tempMatches.push(mutationIndex);
+            } else if(this.tmbSelected ===1) {
+                if (currentTmb > 5) {
+                    tempMatches.push(mutationIndex);                      
+                }
+            } else if (this.tmbSelected ===2) {
                 if (currentTmb > 10) {
-                    tempMatches.push(this.mutationMatches[i])
-                }       
-            }
-            this.tmbMatches = tempMatches;
+                    tempMatches.push(mutationIndex);
+                }
+            } else if (this.tmbSelected ===3) {
+                if (currentTmb > 20) {
+                    tempMatches.push(mutationIndex);
+                }
+            }      
+
         }
-        console.log(this.tmbRates[0]);
+        this.tmbMatches = tempMatches;
     }
 
-    computeMutationMatches(tempMatches) {
+    computeMutationMatches() {
         var tempMatches=[]
-        if (this.egfVariantsSelected === 0) {
-            this.mutationMatches = this.egfrMutations;
-        }
-        else {
-            for (var i = 0; i < this.egfrMutations.length; i++) {
-                var currentMutation = this.egfrMutations[i];
-                if (this.egfVariantsSelected === 1 && currentMutation !== "None") {
-                    tempMatches.push(i);
-                }
-                else if (this.egfVariantsSelected === 2 && currentMutation === "Tier1") {
-                    tempMatches.push(i);
-                }
-                else if (this.egfVariantsSelected === 3
-                    && (currentMutation === "Tier1" || currentMutation === "Tier2")) {
-                    tempMatches.push(i);
-                }
+        for (var i = 0; i < this.egfrMutations.length; i++) {
+            var currentMutation = this.egfrMutations[i];
+            if (this.egfVariantsSelected === 0) {
+                tempMatches.push(i);
             }
-            this.mutationMatches = tempMatches;
+            if (this.egfVariantsSelected === 1 && currentMutation !== "None") {
+                tempMatches.push(i);
+            }
+            if (this.egfVariantsSelected === 2 && currentMutation === "Tier1") {
+                tempMatches.push(i);
+            }
+            if (this.egfVariantsSelected === 3
+                && (currentMutation === "Tier1" || currentMutation === "Tier2")) {
+                tempMatches.push(i);
+            }
         }
+        return tempMatches;
     }
 }

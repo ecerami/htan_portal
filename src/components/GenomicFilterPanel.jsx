@@ -54,8 +54,7 @@ class GenomicFilterPanel extends React.Component {
                     <MenuItem value={0}>Any</MenuItem>
                     <MenuItem value={1}>&gt; 5 mutations/MB</MenuItem>
                     <MenuItem value={2}>&gt; 10 mutations/MB</MenuItem>
-                    <MenuItem value={3}>&gt; 15 mutations/MB</MenuItem>
-                    <MenuItem value={4}>&gt; 20 mutations/MB</MenuItem>
+                    <MenuItem value={3}>&gt; 20 mutations/MB</MenuItem>
                     </Select>
                 </Grid>
             </Grid>
