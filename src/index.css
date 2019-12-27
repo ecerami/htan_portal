@@ -7,6 +7,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.section {
+  margin-left: 20px;
+}
+
+.form-control{
+  min-width: 200px;
+}
+
+.form-label{
+  margin-top: 7px;
+}
+
+.chart{
+  height:500px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
