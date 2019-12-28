@@ -1,4 +1,5 @@
 import { observable } from "mobx";
+var sankeyJson = require('./matches.json');
 
 /**
  * Encapsulate all State Variables for the Application.
@@ -8,13 +9,18 @@ export default class PatientSpaceState {
     @observable mutationMatches = [];
     @observable tmbMatches = [];
     @observable egfVariantsSelected = 2;
-    @observable tmbSelected = 2;
+    @observable tmbSelected = 0;
+    @observable matchesJson = sankeyJson;
 
     constructor() {
         this.egfrMutations = [];
         this.tmbRates = [];
         this.createRandomPatients();
         this.computeMatches();
+    }
+
+    getMatchesJson() {
+        return this.matchesJson;
     }
 
     createRandomPatients() {
@@ -78,9 +84,14 @@ export default class PatientSpaceState {
                     tempMatches.push(mutationIndex);
                 }
             }      
-
         }
         this.tmbMatches = tempMatches;
+
+        // Update the Sankey Diagram Values
+        this.matchesJson.links[0].value = this.mutationMatches.length;
+        this.matchesJson.links[1].value = this.egfrMutations.length - this.mutationMatches.length;
+        this.matchesJson.links[2].value = this.tmbMatches.length;
+        this.matchesJson.links[3].value = this.mutationMatches.length - this.tmbMatches.length;
     }
 
     computeMutationMatches() {
