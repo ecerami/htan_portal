@@ -29,7 +29,7 @@ class HTANApp extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6">
-              HTAN Image Browser
+              Multiplex Image Browser
           </Typography>
           </Toolbar>
         </AppBar>
