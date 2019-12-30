@@ -1,0 +1,109 @@
+{
+  "slides": [
+    {
+      "label": "Architecture Panel",
+      "url": "PC1_40a_153/Architecure-panel_11__MART1--30__pan-Cytokeratin--21__CD163--14__CD3D--0__DNA",
+      "markers": [
+        {
+          "label": "MART1",
+          "color": "#FF0000"
+        },
+        {
+          "label": "pan-Cytokeratin",
+          "color": "#00FFFF"
+        },
+        {
+          "label": "CD163",
+          "color": "#00FF00"
+        },
+        {
+          "label": "CD3D",
+          "color": "white"
+        },
+        {
+          "label": "DNA",
+          "color": "#0000FF"
+        }
+      ]
+    },
+    {
+      "label": "T Cells",
+      "url": "PC1_40a_153/T-Cells_0__DNA--17__CD4--18__FOXP3--19__CD8A--11__MART1",
+      "markers": [
+        {
+          "label": "DNA",
+          "color": "blue"
+        },
+        {
+          "label": "CD4",
+          "color": "#00FF00"
+        },
+        {
+          "label": "FOXP3",
+          "color": "white"
+        },
+        {
+          "label": "CD8A",
+          "color": "red"
+        },
+        {
+          "label": "MART1",
+          "color": "#00FFFF"
+        }
+      ]      
+    },
+    {
+      "label": "Progression",
+      "url": "PC1_40a_153/Progression_0__DNA--11__MART1--27__PDL1--30__pan-Cytokeratin",
+      "markers": [
+        {
+          "label": "DNA",
+          "color": "blue"
+        },
+        {
+          "label": "MART1",
+          "color": "red"
+        },        
+        {
+          "label": "PDL1",
+          "color": "#00FF00"
+        },
+        {
+          "label": "pan-Cytokeratin",
+          "color": "white"
+        }
+      ]      
+    },
+    {
+      "label": "Immune",
+      "url": "PC1_40a_153/Immune_0__DNA--21__CD163--10__Langerin--14__CD3D--15__CD20--11__MART1",
+      "markers": [
+        {
+          "label": "DNA",
+          "color": "blue"
+        },
+        {
+          "label": "CD163",
+          "color": "#00FF00"
+        },
+        {
+          "label": "Langerin",
+          "color": "#00FFFF"
+        },
+        {
+          "label": "CD3D",
+          "color": "white"
+        },
+        {
+          "label": "CD20",
+          "color": "#FFA500"
+        },
+        {
+          "label": "MART1",
+          "color": "red"
+        }
+
+      ]      
+    }
+  ]
+}
