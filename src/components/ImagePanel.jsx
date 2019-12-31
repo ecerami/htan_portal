@@ -9,8 +9,8 @@ class ImagePanel extends React.Component {
    * Load the Leaflet Map upon component mounting
    */
   componentDidMount() {
-    this.map = L.map('map').setView([0, 0], 0);
     var layer = this.props.appState.getLayer();
+    this.map = L.map('map').setView([0, 0], 0);
     layer.addTo(this.map);
 
     var southWest = L.latLng(-100, -200);
