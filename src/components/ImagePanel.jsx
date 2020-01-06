@@ -9,16 +9,24 @@ class ImagePanel extends React.Component {
    * Load the Leaflet Map upon component mounting
    */
   componentDidMount() {
-    var layer = this.props.appState.getLayer();
-    this.map = L.map('map').setView([0, 0], 0);
-    layer.addTo(this.map);
+      var layer = this.props.appState.getLayer();
+      this.map = L.map('map').setView([0, 0], 0);
+      layer.addTo(this.map);
 
-    var southWest = L.latLng(-100, -200);
-    var northEast = L.latLng(100, 500);
-    var bounds = L.latLngBounds(southWest, northEast);
-    this.map.setMaxBounds(bounds);
+      var southWest = L.latLng(-100, -200);
+      var northEast = L.latLng(100, 500);
+      var bounds = L.latLngBounds(southWest, northEast);
+      this.map.setMaxBounds(bounds);
+      this.mapMounted = true;
+      console.log("Setting up map");
   }
 
+  componentWillUnmount(){
+    console.log("Component will unmount");
+    var layer = this.props.appState.getLayer();
+    layer.removeFrom(this.map);
+  }
+  
   drawMakers() {
     //   L.marker([0, 0]).addTo(map)
     //     .bindPopup('[0,0]')

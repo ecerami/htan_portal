@@ -1,0 +1,31 @@
+{
+    "labels": [
+      {
+        "id": "gender",
+        "label": "Gender"
+      },
+      {
+        "id": "cancerType",
+        "label": "Cancer Type"
+      },
+      {
+        "id": "LUAD",
+        "label": "Lung Adenocarcinoma"
+      },
+      {
+        "id": "CRC",
+        "label": "Colorectal Cancer"
+      },
+      {
+        "id": "BRCA",
+        "label": "Breast Cancer"
+      },
+      {
+        "id": "male",
+        "label": "Male"
+      },      {
+        "id": "female",
+        "label": "Female"
+      }      
+    ]
+  }

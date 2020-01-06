@@ -1,0 +1,54 @@
+{
+    "cases": [
+      {
+        "id": "01",
+        "gender": "male",
+        "cancerType": "LUAD"
+      },
+      {
+        "id": "02",
+        "gender": "female",
+        "cancerType": "LUAD"
+      },
+      {
+        "id": "03",
+        "gender": "male",
+        "cancerType": "LUAD"
+      },
+      {
+        "id": "04",
+        "gender": "male",
+        "cancerType": "LUAD"
+      },
+      {
+        "id": "05",
+        "gender": "male",
+        "cancerType": "LUAD"
+      },
+      {
+        "id": "06",
+        "gender": "male",
+        "cancerType": "LUAD"
+      },
+      {
+        "id": "07",
+        "gender": "female",
+        "cancerType": "LUAD"
+      },
+      {
+        "id": "08",
+        "gender": "male",
+        "cancerType": "LUAD"
+      },
+      {
+        "id": "09",
+        "gender": "male",
+        "cancerType": "CRC"
+      },
+      {
+        "id": "10",
+        "gender": "female",
+        "cancerType": "BRCA"
+      }
+    ]
+  }

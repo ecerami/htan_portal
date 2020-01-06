@@ -1,15 +1,18 @@
 import React from "react";
+import { observer } from 'mobx-react';
 import AppState from './models/AppState';
-import SlidePicker from './components/SlidePicker';
-import ImagePanel from './components/ImagePanel';
+import ImageBrowser from './components/ImageBrowser';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import DataBrowser from "./components/DataBrowser";
 
 /**
  * HTAN App
  */
+@observer
 class HTANApp extends React.Component {
 
   /**
@@ -18,40 +21,48 @@ class HTANApp extends React.Component {
   constructor(props) {
     super(props);
     this.appState = new AppState();
+    this.handleModeChange = this.handleModeChange.bind(this);
+    this.imageBrowser = <ImageBrowser appState={this.appState}/>;
+  }
+
+  handleModeChange() {
+    this.appState.showMetaDataBrowser = ! this.appState.showMetaDataBrowser;
   }
 
   /**
    * Render Component
    */
   render() {
+    let mode = this.getMode();
     return (
       <div>
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6">
-              Multiplex Image Browser
-          </Typography>
+              HTAN Data Portal
+           </Typography>
+           <div className="switcher">
+           <FormControlLabel
+              control={
+                <Switch value={this.appState.showImageBrowser}
+                  onChange={this.handleModeChange}/>
+              }
+            label="Switch to Metadata Browser"
+          />
+          </div>
           </Toolbar>
         </AppBar>
-        <Grid container spacing={2} alignItems="flex-start">
-          <Grid item xs={3}>
-            <div className="leftColumn">
-              <div>
-              <h3>Melanoma Pre-Cancer Atlas (HTAN):  Patient 1</h3>
-              Data served from <a href="https://www.cycif.org/data/pca-2019/">Cycif.org</a>.
-              </div>
-              <br/>
-              t-CyCIF analysis of biopsy from Patient 1 that contains examplars of early melanoma progression.
-              <br/><br/>
-              <SlidePicker appState={this.appState}/>
-            </div>
-          </Grid>
-          <Grid item xs={9}>
-            <ImagePanel appState={this.appState}/>
-          </Grid>
-        </Grid>
+        { mode }
       </div>
     );
+  }
+
+  getMode() {
+    if (this.appState.showMetaDataBrowser===true) {
+      return (<DataBrowser appState={this.appState}/>);
+    } else {
+      return (<ImageBrowser appState={this.appState}/>);
+    }
   }
 
 }
