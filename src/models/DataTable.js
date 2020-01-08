@@ -1,5 +1,5 @@
 /**
- * Encapsulates Data Table.
+ * Encapsulates a Data Table.
  * Can be filtered and rendered.
  */
 class DataTable {
@@ -14,53 +14,62 @@ class DataTable {
   }
 
   /**
+   * Gets the Label Map.
+   * Example:  BRCA --> Breast Cancer
+   */
+  getLabelMap() {
+    return this.labelMap;
+  }
+
+  /**
+   * Gets the List of all Attribute Names.
+   * Example:  gender, cancerType, etc.
+   */
+  getAttributeNameSet() {
+    return this.attributeNameSet;
+  }
+
+  /**
+   * Gets the Attribute Value Map.
+   * Example:  gender --> (male, female).
+   */
+  getAttributeValueMap() {
+    return this.attributeValueMap;
+  }
+
+  /**
    * Takes a JSON List and automatically generates:
    * 1.  List of Attribute Names
    * 2.  List of Permissible Attribute Values for each Attribute Name
    */
   initFilters(dataList) {
-    this.attributeNames = {};
-    this.attributeValues = {};
+    this.attributeNameSet = new Set();
+    this.attributeValueMap = new Map();
     for (let i = 0; i < dataList.length; i++) {
       let currentItem = dataList[i];
       for (let key in currentItem) {
         let currentValue = currentItem[key];
-        this.attributeNames[key] = true;
-        if (key in this.attributeValues) {
-          let currentAttributeSet = this.attributeValues[key];
-          currentAttributeSet[currentValue] = true;
+        this.attributeNameSet.add(key);
+        if (this.attributeValueMap.has(key)) {
+          let currentAttributeSet = this.attributeValueMap.get(key);
+          currentAttributeSet.add(currentValue);
         } else {
-          let currentAttributeSet = {};
-          currentAttributeSet[currentValue] = true;
-          this.attributeValues[key] = currentAttributeSet;
+          let currentAttributeSet = new Set();
+          currentAttributeSet.add(currentValue);
+          this.attributeValueMap.set(key, currentAttributeSet);
         }
       }
     }
-
-    // TODO:  Convert attributeNames to a regular array
-    // TODO:  Convert members of attributeValues to a regular array
-  }
-
-  getLabelMap() {
-    return this.labelMap;
-  }
-
-  getAttributeNameMap() {
-    return this.attributeNames;
-  }
-
-  getAttributeValueMap() {
-    return this.attributeValues;
   }
 
   /**
    * Init all the Labels.
    */
   initLabels(labelList) {
-    this.labelMap = {};
+    this.labelMap = new Map();
     for (let currentIndex in labelList) {
       let currentItem = labelList[currentIndex];
-      this.labelMap[currentItem.id] = currentItem.label;
+      this.labelMap.set(currentItem.id, currentItem.label);
     }
   }
 }
