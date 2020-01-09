@@ -1,3 +1,5 @@
+import jsonata from "jsonata";
+
 /**
  * Encapsulates a Data Table.
  * Can be filtered and rendered.
@@ -9,8 +11,10 @@ class DataTable {
    * @param {JSON Labels} labelList
    */
   constructor(dataList, labelList) {
-    this.initLabels(labelList);
-    this.initFilters(dataList);
+    this.dataRoot = Object.keys(dataList)[0];
+    this.dataList = dataList;
+    this.initLabels(labelList.labels);
+    this.initFilters(dataList[this.dataRoot]);
   }
 
   /**
@@ -37,10 +41,13 @@ class DataTable {
     return this.attributeValueMap;
   }
 
-  // TODO:  Add the filter() method.
-  // this should take in a Filter Object that has one or more:
-  // attributeNames --> [attributeValue to match on]
-  // it will then iterate through all the data items, and only return the matching items...
+  filterTable (filter) {
+    let queryString = filter.getQueryString();
+    queryString = this.dataRoot + " [" + queryString + "]";
+    let expression = jsonata(queryString);
+    let result = expression.evaluate(this.dataList);
+    return result;
+  }
 
   /**
    * Takes a JSON List and automatically generates:

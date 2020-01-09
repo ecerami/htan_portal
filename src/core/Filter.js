@@ -5,7 +5,7 @@ class Filter {
   filterMap = new Map();
 
   /**
-   * Add a new filter.
+   * Add a new categorical filter.
    * Example:  gender, female.
    * @param {AtributeName} name
    * @param {AttributeValue} value

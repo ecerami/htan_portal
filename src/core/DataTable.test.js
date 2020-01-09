@@ -1,9 +1,10 @@
 import DataTable from "./DataTable";
+import Filter from "./Filter";
 let cases = require("../data/cases.json");
 let labels = require("../data/labels.json");
 
-test("Very that Labels Are Imported Correctly", () => {
-  let table = new DataTable(cases.cases, labels.labels);
+test("Verify that Labels Are Imported Correctly", () => {
+  let table = new DataTable(cases, labels);
   let labelMap = table.getLabelMap();
   expect(labelMap.size).toBe(7);
   expect(labelMap.has("gender")).toBe(true);
@@ -11,8 +12,8 @@ test("Very that Labels Are Imported Correctly", () => {
   expect(labelMap.get("BRCA")).toBe("Breast Cancer");
 });
 
-test("Very that Filter are Imported Correctly", () => {
-  let table = new DataTable(cases.cases, labels.labels);
+test("Verify that Filters are Imported Correctly", () => {
+  let table = new DataTable(cases, labels);
   let attributeNameSet = table.getAttributeNameSet();
   let attributeValueMap = table.getAttributeValueMap();
   expect(attributeNameSet.has("gender")).toBe(true);
@@ -25,4 +26,24 @@ test("Very that Filter are Imported Correctly", () => {
   expect(cancerTypeSet.size).toBe(3);
   expect(cancerTypeSet.has("BRCA")).toBe(true);
   expect(cancerTypeSet.has("LUAD")).toBe(true);
+});
+
+test("Test Filters, Take 1", () => {
+  let filter = new Filter();
+  filter.addFilter("gender", "female");
+  filter.addFilter("cancerType", "LUAD");
+  filter.addFilter("cancerType", "BRCA");
+  let table = new DataTable(cases, labels);
+  let filteredTable = table.filterTable(filter);
+  expect(filteredTable.length).toBe(3);
+});
+
+test("Test Filters, Take 2", () => {
+  let filter = new Filter();
+  filter.addFilter("gender", "male");
+  filter.addFilter("cancerType", "LUAD");
+  filter.addFilter("cancerType", "BRCA");
+  let table = new DataTable(cases, labels);
+  let filteredTable = table.filterTable(filter);
+  expect(filteredTable.length).toBe(6);
 });
