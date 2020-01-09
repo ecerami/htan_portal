@@ -1,6 +1,6 @@
 import DataTable from "./DataTable";
-let cases = require("./cases.json");
-let labels = require("./labels.json");
+let cases = require("../data/cases.json");
+let labels = require("../data/labels.json");
 
 test("Very that Labels Are Imported Correctly", () => {
   let table = new DataTable(cases.cases, labels.labels);

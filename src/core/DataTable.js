@@ -37,6 +37,11 @@ class DataTable {
     return this.attributeValueMap;
   }
 
+  // TODO:  Add the filter() method.
+  // this should take in a Filter Object that has one or more:
+  // attributeNames --> [attributeValue to match on]
+  // it will then iterate through all the data items, and only return the matching items...
+
   /**
    * Takes a JSON List and automatically generates:
    * 1.  List of Attribute Names
