@@ -28,20 +28,20 @@ class DataBrowser extends React.Component {
   
   getFilters() {
     let jsx = [];
-    let attributeNames = this.props.appState.attributeNames;
-    let attributeValues = this.props.appState.attributeValues;
-    let labels = this.props.appState.labels;
-    for (let attributeName of attributeNames.values()) {
-      jsx.push(<h4 key={labels[attributeName]}>{labels[attributeName]}</h4>);
-      let currentAttributeValues = attributeValues[attributeName];
+    let attributeNameSet = this.props.appState.dataTable.getAttributeNameSet();
+    let attributeValueMap = this.props.appState.dataTable.getAttributeValueMap();
+    let labelMap = this.props.appState.dataTable.getLabelMap();
+    for (let attributeName of attributeNameSet.values()) {
+      jsx.push(<h4 key={labelMap.get(attributeName)}>{labelMap.get(attributeName)}</h4>);
+      let currentAttributeValues = attributeValueMap.get(attributeName);
       for (let value of currentAttributeValues) {
         jsx.push(
           <FormControlLabel
-          key={labels[value]}
+          key={labelMap.get(value)}
           control={
             <Checkbox checked={true} onChange={this.handleChange('antoine')} value="antoine" />
           }
-          label={labels[value]}
+          label={labelMap.get(value)}
         />)
       }
     }

@@ -1,5 +1,6 @@
 import { observable } from "mobx";
 import L from "leaflet";
+import DataTable from '../core/DataTable';
 var json1 = require("../data/slides.json");
 var json2 = require("../data/cases.json");
 var json3 = require("../data/labels.json");
@@ -16,50 +17,8 @@ export default class AppState {
     this.slidesJson = json1;
     this.casesJson = json2;
     this.labelsJson = json3;
-    this.initLabels(this.labelsJson.labels);
-    this.initFilters(this.casesJson.cases);
+    this.dataTable = new DataTable(this.casesJson, this.labelsJson);
     this.initMap();
-  }
-
-  /**
-   * Init all the Labels.
-   */
-  initLabels(jsonList) {
-    let labels = new Map();
-    for (let currentIndex in jsonList) {
-      let currentItem = jsonList[currentIndex];
-      labels[currentItem.id] = currentItem.label;
-    }
-    this.labels = labels;
-  }
-
-  /**
-   * Takes a JSON List and automatically generates:
-   * 1.  List of Attribute Names
-   * 2.  List of Permissible Attribute Values for each Attribute Name
-   */
-  initFilters(jsonList) {
-    let attributeNames = new Set();
-    let attributeValues = new Map();
-    for (let currentIndex in jsonList) {
-      let currentItem = jsonList[currentIndex];
-      for (let key in currentItem) {
-        attributeNames.add(key);
-        let currentValue = currentItem[key];
-        if (key in attributeValues) {
-          let currentAttributeSet = attributeValues[key];
-          currentAttributeSet.add(currentValue);
-        } else {
-          let currentAttributeSet = new Set();
-          currentAttributeSet.add(currentValue);
-          attributeValues[key] = currentAttributeSet;
-        }
-      }
-    }
-    // Remove the ID
-    attributeNames.delete("id");
-    this.attributeNames = attributeNames;
-    this.attributeValues = attributeValues;
   }
 
   initMap() {

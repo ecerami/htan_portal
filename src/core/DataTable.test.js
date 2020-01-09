@@ -1,7 +1,7 @@
 import DataTable from "./DataTable";
 import Filter from "./Filter";
-let cases = require("../data/cases.json");
-let labels = require("../data/labels.json");
+let cases = require("../data/test_cases.json");
+let labels = require("../data/test_labels.json");
 
 test("Verify that Labels Are Imported Correctly", () => {
   let table = new DataTable(cases, labels);
@@ -16,6 +16,7 @@ test("Verify that Filters are Imported Correctly", () => {
   let table = new DataTable(cases, labels);
   let attributeNameSet = table.getAttributeNameSet();
   let attributeValueMap = table.getAttributeValueMap();
+  expect(attributeNameSet.has("id")).toBe(false);
   expect(attributeNameSet.has("gender")).toBe(true);
   let genderSet = attributeValueMap.get("gender");
   expect(genderSet.size).toBe(2);

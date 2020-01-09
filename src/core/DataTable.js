@@ -60,15 +60,17 @@ class DataTable {
     for (let i = 0; i < dataList.length; i++) {
       let currentItem = dataList[i];
       for (let key in currentItem) {
-        let currentValue = currentItem[key];
-        this.attributeNameSet.add(key);
-        if (this.attributeValueMap.has(key)) {
-          let currentAttributeSet = this.attributeValueMap.get(key);
-          currentAttributeSet.add(currentValue);
-        } else {
-          let currentAttributeSet = new Set();
-          currentAttributeSet.add(currentValue);
-          this.attributeValueMap.set(key, currentAttributeSet);
+        if (key !== "id") {
+          let currentValue = currentItem[key];
+          this.attributeNameSet.add(key);
+          if (this.attributeValueMap.has(key)) {
+            let currentAttributeSet = this.attributeValueMap.get(key);
+            currentAttributeSet.add(currentValue);
+          } else {
+            let currentAttributeSet = new Set();
+            currentAttributeSet.add(currentValue);
+            this.attributeValueMap.set(key, currentAttributeSet);
+          }
         }
       }
     }
