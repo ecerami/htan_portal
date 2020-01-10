@@ -1,6 +1,7 @@
 import { observable } from "mobx";
 import L from "leaflet";
-import DataTable from '../core/DataTable';
+import DataTable from "../core/DataTable";
+import Filter from "../core/Filter";
 var json1 = require("../data/slides.json");
 var json2 = require("../data/cases.json");
 var json3 = require("../data/labels.json");
@@ -9,7 +10,6 @@ var json3 = require("../data/labels.json");
  * Encapsulate all State Variables for the Application.
  */
 export default class AppState {
-  @observable slidesJson;
   @observable slideIndex = 0;
   @observable showMetaDataBrowser = false;
 
@@ -18,6 +18,7 @@ export default class AppState {
     this.casesJson = json2;
     this.labelsJson = json3;
     this.dataTable = new DataTable(this.casesJson, this.labelsJson);
+    this.filter = new Filter();
     this.initMap();
   }
 

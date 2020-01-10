@@ -31,9 +31,9 @@ test("Verify that Filters are Imported Correctly", () => {
 
 test("Test Filters, Take 1", () => {
   let filter = new Filter();
-  filter.addFilter("gender", "female");
-  filter.addFilter("cancerType", "LUAD");
-  filter.addFilter("cancerType", "BRCA");
+  filter.toggleFilterState("gender", "female");
+  filter.toggleFilterState("cancerType", "LUAD");
+  filter.toggleFilterState("cancerType", "BRCA");
   let table = new DataTable(cases, labels);
   let filteredTable = table.filterTable(filter);
   expect(filteredTable.length).toBe(3);
@@ -41,9 +41,9 @@ test("Test Filters, Take 1", () => {
 
 test("Test Filters, Take 2", () => {
   let filter = new Filter();
-  filter.addFilter("gender", "male");
-  filter.addFilter("cancerType", "LUAD");
-  filter.addFilter("cancerType", "BRCA");
+  filter.toggleFilterState("gender", "male");
+  filter.toggleFilterState("cancerType", "LUAD");
+  filter.toggleFilterState("cancerType", "BRCA");
   let table = new DataTable(cases, labels);
   let filteredTable = table.filterTable(filter);
   expect(filteredTable.length).toBe(6);

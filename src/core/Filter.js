@@ -1,22 +1,41 @@
 /**
  * Filter class, used to generate JSON Query Strings.
  */
+import { observable, computed } from "mobx";
+
 class Filter {
-  filterMap = new Map();
+  @observable filterMap = new Map();
 
   /**
-   * Add a new categorical filter.
+   * Toggle Filter State
    * Example:  gender, female.
    * @param {AtributeName} name
    * @param {AttributeValue} value
    */
-  addFilter(name, value) {
-    let currentValueList = new Set();
-    if (this.filterMap.has(name)) {
-      currentValueList = this.filterMap.get(name);
+  toggleFilterState(name, value) {
+    if (this.getFilterState(name, value)) {
+      let currentValueList = this.filterMap.get(name);
+      currentValueList.delete(value);
+    } else {
+      let currentValueList = new Set();
+      if (this.filterMap.has(name)) {
+        currentValueList = this.filterMap.get(name);
+      }
+      currentValueList.add(value);
+      this.filterMap.set(name, currentValueList);
     }
-    currentValueList.add(value);
-    this.filterMap.set(name, currentValueList);
+  }
+
+  @computed getFilterState(name, value) {
+    let returnValue = false;
+    if (this.filterMap.has(name)) {
+      let currentValueList = this.filterMap.get(name);
+      returnValue = currentValueList.has(value);
+    }
+    console.log(
+      "Checking filter state:  " + name + ", " + value + " --> " + returnValue
+    );
+    return returnValue;
   }
 
   /**
