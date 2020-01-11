@@ -1,8 +1,12 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+import DataGrid from './DataGrid'
+import { observer } from 'mobx-react';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Filter from "../core/Filter";
 
+@observer
 class DataBrowser extends React.Component {
   constructor(props) {
     super(props);
@@ -20,7 +24,7 @@ class DataBrowser extends React.Component {
           </div>
         </Grid>
         <Grid item xs={9}>
-          Data Grid
+          <DataGrid appState={this.props.appState}/>
         </Grid>
       </Grid>
     );
@@ -28,11 +32,8 @@ class DataBrowser extends React.Component {
 
   handleChange(event) {
     let filter = this.props.appState.filter;
-    console.log("Event Target Value:  " + event.target.value);
-    console.log("Event Target Checked:  " + event.target.checked);
-    let parts = event.target.value.split("_");
-    console.log(parts[0] + " " + parts[1]);
-    //filter.toggleFilterState(parts[0], parts[1]);
+    let parts = event.target.value.split(Filter.DELIM);
+    filter.toggleFilterState(parts[0], parts[1]);
   }
 
   getFilters() {
@@ -47,23 +48,24 @@ class DataBrowser extends React.Component {
       );
       let currentAttributeValues = attributeValueMap.get(attributeName);
       for (let attributeValue of currentAttributeValues) {
-        let key = attributeName + "_" + attributeValue;
-        jsx.push(
-          <FormControlLabel
-            key={key}
-            control={
-              <Checkbox
-                checked={filter.getFilterState(attributeName, attributeValue)}
-                value={key}
-                onChange={this.handleChange}
-              />
-            }
-            label={labelMap.get(attributeValue)}
-          />
-        );
+        let key = attributeName + Filter.DELIM + attributeValue;
+        let checked = this.isChecked(filter, key);
+        this.createCheckBox(jsx, key, checked, labelMap, attributeValue);
       }
     }
     return jsx;
+  }
+
+  createCheckBox(jsx, key, checked, labelMap, attributeValue) {
+    jsx.push(<FormControlLabel key={key} control={<Checkbox checked={checked} value={key} onChange={this.handleChange} />} label={labelMap.get(attributeValue)} />);
+  }
+
+  isChecked(filter, key) {
+    let checked = false;
+    if (filter.filterList.includes(key)) {
+      checked = true;
+    }
+    return checked;
   }
 }
 

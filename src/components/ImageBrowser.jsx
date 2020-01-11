@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import SlidePicker from './SlidePicker';
 import ImagePanel from './ImagePanel';
 import Grid from '@material-ui/core/Grid';

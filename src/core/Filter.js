@@ -1,10 +1,11 @@
 /**
  * Filter class, used to generate JSON Query Strings.
  */
-import { observable, computed } from "mobx";
+import { observable } from "mobx";
 
 class Filter {
-  @observable filterMap = new Map();
+  static DELIM = "_";
+  @observable filterList = [];
 
   /**
    * Toggle Filter State
@@ -13,29 +14,13 @@ class Filter {
    * @param {AttributeValue} value
    */
   toggleFilterState(name, value) {
-    if (this.getFilterState(name, value)) {
-      let currentValueList = this.filterMap.get(name);
-      currentValueList.delete(value);
+    let key = name + Filter.DELIM + value;
+    if (this.filterList.includes(key)) {
+      const index = this.filterList.indexOf(key);
+      this.filterList.splice(index, 1);
     } else {
-      let currentValueList = new Set();
-      if (this.filterMap.has(name)) {
-        currentValueList = this.filterMap.get(name);
-      }
-      currentValueList.add(value);
-      this.filterMap.set(name, currentValueList);
+      this.filterList.push(key)
     }
-  }
-
-  @computed getFilterState(name, value) {
-    let returnValue = false;
-    if (this.filterMap.has(name)) {
-      let currentValueList = this.filterMap.get(name);
-      returnValue = currentValueList.has(value);
-    }
-    console.log(
-      "Checking filter state:  " + name + ", " + value + " --> " + returnValue
-    );
-    return returnValue;
   }
 
   /**
@@ -43,6 +28,7 @@ class Filter {
    * Example query string:  cases[(gender in ["male", "female"]) and (cancerType in ["BRCA"])]
    */
   getQueryString() {
+    // TODO:  Convert the Array to a Map of Sets...
     let queryString = "";
     let queryList = [];
     for (let name of this.filterMap.keys()) {

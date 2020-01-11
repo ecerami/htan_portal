@@ -18,11 +18,9 @@ class ImagePanel extends React.Component {
       var bounds = L.latLngBounds(southWest, northEast);
       this.map.setMaxBounds(bounds);
       this.mapMounted = true;
-      console.log("Setting up map");
   }
 
   componentWillUnmount(){
-    console.log("Component will unmount");
     var layer = this.props.appState.getLayer();
     layer.removeFrom(this.map);
   }
