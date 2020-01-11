@@ -6,6 +6,8 @@ test("Query String, Test 1", () => {
   filter.toggleFilterState("gender", "female");
   filter.toggleFilterState("cancerType", "LUAD");
   filter.toggleFilterState("cancerType", "BRCA");
+  let filterMap = filter.generateFilterMap();
+  expect(filterMap.has("gender")).toBeTruthy();
   let queryStr = filter.getQueryString();
   expect(queryStr).toBe(
     "(gender in ['male','female']) and (cancerType in ['LUAD','BRCA'])"

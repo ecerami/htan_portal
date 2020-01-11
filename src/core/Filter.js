@@ -19,7 +19,7 @@ class Filter {
       const index = this.filterList.indexOf(key);
       this.filterList.splice(index, 1);
     } else {
-      this.filterList.push(key)
+      this.filterList.push(key);
     }
   }
 
@@ -28,13 +28,13 @@ class Filter {
    * Example query string:  cases[(gender in ["male", "female"]) and (cancerType in ["BRCA"])]
    */
   getQueryString() {
-    // TODO:  Convert the Array to a Map of Sets...
+    let filterMap = this.generateFilterMap();
     let queryString = "";
     let queryList = [];
-    for (let name of this.filterMap.keys()) {
+    for (let name of filterMap.keys()) {
       let subQueryString = "(";
       subQueryString = subQueryString.concat(name + " in [");
-      let valueSet = this.filterMap.get(name);
+      let valueSet = filterMap.get(name);
       let valueList = [];
       for (let value of valueSet) {
         valueList.push("'" + value + "'");
@@ -45,6 +45,25 @@ class Filter {
     }
     queryString = queryList.join(" and ");
     return queryString;
+  }
+
+  generateFilterMap() {
+    let filterMap = new Map();
+    for (let i = 0; i < this.filterList.length; i++) {
+      let key = this.filterList.get(i);
+      let parts = key.split(Filter.DELIM);
+      let name = parts[0];
+      let value = parts[1];
+      if (filterMap.has(name)) {
+        let attributeList = filterMap.get(name);
+        attributeList.add(value);
+      } else {
+        let attributeList = new Set();
+        attributeList.add(value);
+        filterMap.set(name, attributeList);
+      }
+    }
+    return filterMap;
   }
 }
 
